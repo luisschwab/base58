@@ -1,3 +1,5 @@
+p = int('FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F', 16)
+
 def find_y(x, parity_value, p):
     y2 = (x**3 + 7) % p
 

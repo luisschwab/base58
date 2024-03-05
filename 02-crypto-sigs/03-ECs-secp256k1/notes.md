@@ -150,7 +150,7 @@ G = 04 79BE667E F9DCBBAC 55A06295 CE870B07
        FD17B448 A6855419 9C47D08F FB10D4B8
 ```
 
-the first byte (`04`) indicates uncompressed form (versus `02`
+the first byte (`04`) indicates uncompressed form (versus `02` and `03`
 indicating compressed form).
 
 the other 64 bytes are split between `x` and `y` coordinates:
@@ -204,7 +204,7 @@ this will yield:\
 
 but we want `y`, and we can't just do $\sqrt{y^2}$, since we're on a finite field.
 
-to calculate `p` on _secp256k1_ specifically, we use 
+to calculate `y` on _secp256k1_ specifically, we use 
 [this trick](https://crypto.stackexchange.com/questions/82027/is-it-possible-to-compute-the-y-coordinate-of-a-point-on-secp256k1-given-only-t/98364#98364).
 
 in python, this translates to:
@@ -216,14 +216,14 @@ y = pow(y^2, (p+1)//4, p)
 in our case, this yields\
 `y = 32670510020758816978083085130507043184471273380659243275938904335757337482424`,
 
-which is even an matches our `02` parity byte.
+which is even, just like `02`, the parity byte.
 
 but what if the parity byte had a value of `03`?
 
-to do that, we find the additive inverse on the finite field:
+to do that, we find the additive inverse of `y` on the finite field:
 `y = p - y`
 
-the other y value will be\
+the other `y` will have a value of\
 `y = 83121579216557378445487899878180864668798711284981320763518679672151497189239`
 
 that's it.
